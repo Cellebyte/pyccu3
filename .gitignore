@@ -1,0 +1,6 @@
+test.py
+.venv/
+.mypy_cache
+*.json
+__pycache__
+dist/
