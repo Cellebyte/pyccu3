@@ -11,6 +11,7 @@ from pyccu3.objects.xml_api import (
     HomeMaticStateList,
     HomeMaticProgramList,
     HomeMaticRoomList,
+    HomeMaticFunctionList,
 )
 from urllib.parse import urljoin
 import urllib3
@@ -99,6 +100,9 @@ class PyCCU3:
 
     def programlist(self):
         return HomeMaticProgramList.from_dict(self.get("programlist.cgi"))
+
+    def functionlist(self):
+        return HomeMaticFunctionList.from_dict(self.get("functionlist.cgi"))
 
     @property
     def api_version(self):

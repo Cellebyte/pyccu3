@@ -1,7 +1,18 @@
 from dataclasses import dataclass, asdict
 import dacite
 from typing import Union, Dict, Any, Optional
-from pyccu3.enums import RFInterface, DataPointType, DataPointUnit, XMLDirection, FirmwareUpdateState, BOOLEAN, AESState, RxMode, Direction
+from enum import Enum
+from pyccu3.enums import (
+    RFInterface,
+    DataPointType,
+    DataPointUnit,
+    XMLDirection,
+    FirmwareUpdateState,
+    BOOLEAN,
+    AESState,
+    RxMode,
+    Direction,
+)
 
 
 @dataclass

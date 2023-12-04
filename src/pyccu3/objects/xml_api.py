@@ -50,6 +50,12 @@ class HomeMaticStateChannel(XMLAPIBaseSerializer):
 
 
 @dataclass
+class HomeMaticFunctionChannel(XMLAPIBaseSerializer):
+    address: str
+    ise_id: int
+
+
+@dataclass
 class HomeMaticDevice(XMLAPIBaseSerializer):
     name: str
     address: str
@@ -93,6 +99,14 @@ class HomeMaticProgram(XMLAPIBaseSerializer):
 
 
 @dataclass
+class HomeMaticFunction(XMLAPIBaseSerializer):
+    name: str
+    description: str
+    ise_id: int
+    channel: List[HomeMaticFunctionChannel] = field(default_factory=list)
+
+
+@dataclass
 class HomeMaticDevices(XMLAPIBaseSerializer):
     device: List[HomeMaticDevice] = field(default_factory=list)
 
@@ -118,6 +132,11 @@ class HomeMaticPrograms(XMLAPIBaseSerializer):
 
 
 @dataclass
+class HomeMaticFunctions(XMLAPIBaseSerializer):
+    function: List[HomeMaticFunction]
+
+
+@dataclass
 class HomeMaticStateList(XMLAPIBaseSerializer):
     stateList: HomeMaticStates
 
@@ -130,3 +149,8 @@ class HomeMaticRoomList(XMLAPIBaseSerializer):
 @dataclass
 class HomeMaticProgramList(XMLAPIBaseSerializer):
     programList: HomeMaticPrograms
+
+
+@dataclass
+class HomeMaticFunctionList(XMLAPIBaseSerializer):
+    functionList: HomeMaticFunctions
