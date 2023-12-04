@@ -144,8 +144,6 @@ class PyCCU3Legacy:
         if not jsonify:
             return response.text
         output = self.scripting_regex.sub("", response.text, 1)
-        if response.encoding:
-            return json.loads(output.encode(response.encoding))
         return json.loads(output)
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
