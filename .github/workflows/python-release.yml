@@ -14,9 +14,13 @@ env:
 
 jobs:
   release:
-    runs-on: ubuntu-22.04 # use an ancient release for glibc compatibility.
+    runs-on: ubuntu-22.04
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pyccu3
     permissions:
       contents: write
+      id-token: write
     strategy:
       fail-fast: true
       matrix:
@@ -73,9 +77,5 @@ jobs:
         fail_on_unmatched_files: true
         files: |
           ./dist/*
-
     - name: Release on PyPi
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
