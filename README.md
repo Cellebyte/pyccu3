@@ -16,3 +16,4 @@ Supported endpoints
 * `version.cgi`
 * `roomlist.cgi`
 * `programlist.cgi`
+* `functionlist.cgi`
