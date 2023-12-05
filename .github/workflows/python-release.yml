@@ -15,6 +15,8 @@ env:
 jobs:
   release:
     runs-on: ubuntu-22.04 # use an ancient release for glibc compatibility.
+    permissions:
+      contents: write
     strategy:
       fail-fast: true
       matrix:
