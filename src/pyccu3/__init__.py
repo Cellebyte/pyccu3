@@ -1,23 +1,33 @@
-import json_fix as _
-import re
-from pyccu3.constants import ALLOWED_PARAMSET_TYPES, ALLOWED_PARAMSET_DESCRIPTION_TYPES
-from typing import Optional, List, Dict, Union
-import xmlrpc.client
+import importlib.metadata
 import json
+import re
+import xmlrpc.client
+from typing import Dict, List, Optional, Union
+from urllib.parse import urljoin
+
+import json_fix as _  # type: ignore # noqa: F401
 import requests
+import urllib3
+import xmltodict
+
+from pyccu3.constants import ALLOWED_PARAMSET_DESCRIPTION_TYPES, ALLOWED_PARAMSET_TYPES
 from pyccu3.objects.legacy import HomeMaticRPCDevice
 from pyccu3.objects.xml_api import (
     HomeMaticDeviceList,
-    HomeMaticStateList,
+    HomeMaticFunctionList,
     HomeMaticProgramList,
     HomeMaticRoomList,
-    HomeMaticFunctionList,
+    HomeMaticStateList,
 )
-from urllib.parse import urljoin
-import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-import xmltodict
+
+
+try:
+    # This will read version from pyproject.toml
+    __version__ = importlib.metadata.version(__name__)
+except Exception:
+    __version__ = "develop"
 
 
 class PyCCU3:

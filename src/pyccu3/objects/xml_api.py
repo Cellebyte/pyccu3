@@ -1,13 +1,14 @@
 from dataclasses import dataclass, field
-from typing import Union, List, Optional
-from pyccu3.objects.base import XMLAPIBaseSerializer
+from typing import List, Optional, Union
+
 from pyccu3.enums import (
-    XMLDirection,
-    DataPointType,
     BOOLEAN,
+    DataPointType,
     DataPointUnit,
     RFInterface,
+    XMLDirection,
 )
+from pyccu3.objects.base import XMLAPIBaseSerializer
 
 
 @dataclass

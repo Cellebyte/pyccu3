@@ -1,0 +1,79 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python Release
+on:
+  push:
+    tags:
+      # only run the release pipeline on semver tags
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+env:
+  TAG_NAME: ${{ github.ref_name }}
+  LINUX_AMD64_BINARY: "netplanner-linux-amd64-${{ github.ref_name }}"
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04 # use an ancient release for glibc compatibility.
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        which strip
+        python -m pip install --upgrade pip poetry
+        poetry config virtualenvs.in-project true
+        poetry config virtualenvs.create true
+        poetry --version
+        poetry install --no-root
+    - name: Build package
+      run: |
+        poetry build
+    - name: Install Package
+      run: |
+        poetry run python -m pip install dist/*.whl
+        echo "PROJECT_VERSION=$(poetry run python -c'import pyccu3; print(pyccu3.__version__)')" >> $GITHUB_ENV
+        echo "::set-output name=version::$(poetry run python -c 'import pyccu3; print(pyccu3.__version__)')"
+        poetry run python -m pip uninstall --yes dist/*.whl
+      id: version
+    - name: Break on version mismatch
+      if: ${{ env.TAG_NAME != env.PROJECT_VERSION }}
+      run: |
+        echo "::error::We found a version mismatch GIT:[${{ env.TAG_NAME }}] != PROJECT:[${{ env.PROJECT_VERSION }}]"
+        exit 1
+    - name: Lint with black
+      run: |
+        poetry run black -t py310 --check .
+    - name:  Type Lint with mypy
+      run: |
+        poetry run mypy src
+    - name: Build package
+      run: |
+        poetry build
+
+    - name: Unit Tests
+      run: |
+        echo "This should later run the unit tests."
+
+    - name: Release on GitHub
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+        fail_on_unmatched_files: true
+        files: |
+          ./dist/*
+
+    - name: Release on PyPi
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}

@@ -7,6 +7,10 @@ class MultiValueEnum(Enum):
     The output is everytime the first item when you serialize it to a string.
     """
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(self, args, kwargs)
+        self._all_values = []
+
     def __new__(cls, *values):
         obj = object.__new__(cls)
         # first value is canonical value

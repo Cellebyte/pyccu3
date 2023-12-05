@@ -1,9 +1,9 @@
 import re
-from typing import List
 from dataclasses import dataclass
+from typing import List
 
+from pyccu3.enums import AESState, Direction, FirmwareUpdateState, RxMode
 from pyccu3.objects.base import BaseSerializer
-from pyccu3.enums import AESState, FirmwareUpdateState, Direction, RxMode
 
 
 @dataclass
