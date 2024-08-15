@@ -1,5 +1,7 @@
 from dataclasses import asdict, dataclass
+from datetime import datetime
 from enum import Enum
+from ipaddress import IPv4Address, IPv6Address, ip_address
 from typing import Any, Dict, Optional, Union
 
 import dacite
@@ -15,6 +17,7 @@ from pyccu3.enums import (
     RxMode,
     XMLDirection,
 )
+from pyccu3.types import PartyDate
 
 
 @dataclass
@@ -53,7 +56,7 @@ class Base:
         match value:
             case Enum():
                 return Base.to_serializable(value.value)
-            case str():
+            case IPv4Address() | IPv6Address() | PartyDate() | str():
                 return str(value)
             case bool():
                 return bool(value)
@@ -110,6 +113,9 @@ class XMLAPIBaseSerializer(Base):
                     DataPointUnit,
                     XMLDirection,
                     FirmwareUpdateState,
+                    IPv4Address,
+                    IPv6Address,
+                    PartyDate,
                     bool,
                     int,
                 ],
@@ -119,6 +125,8 @@ class XMLAPIBaseSerializer(Base):
                 type_hooks={
                     float: XMLAPIBaseSerializer.floatify,
                     BOOLEAN: BOOLEAN,
+                    IPv4Address: ip_address,
+                    IPv6Address: ip_address,
                 },
             ),
         )

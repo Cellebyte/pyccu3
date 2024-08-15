@@ -100,7 +100,7 @@ class PyCCU3:
         device_id: Optional[int] = None,
         show_internal: bool = False,
         show_remote: bool = False,
-    ):
+    ) -> HomeMaticDeviceList:
         params = {
             **({"device_id": str(device_id)} if device_id else {}),
             **({"show_internal": "1"} if show_internal else {}),
@@ -108,10 +108,10 @@ class PyCCU3:
         }
         return HomeMaticDeviceList.from_dict(self.get("devicelist.cgi", params=params))
 
-    def programlist(self):
+    def programlist(self) -> HomeMaticProgramList:
         return HomeMaticProgramList.from_dict(self.get("programlist.cgi"))
 
-    def functionlist(self):
+    def functionlist(self) -> HomeMaticFunctionList:
         return HomeMaticFunctionList.from_dict(self.get("functionlist.cgi"))
 
     @property

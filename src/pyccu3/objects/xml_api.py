@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from ipaddress import IPv4Address, IPv6Address
 from typing import List, Optional, Union
 
 from pyccu3.enums import (
@@ -9,6 +10,7 @@ from pyccu3.enums import (
     XMLDirection,
 )
 from pyccu3.objects.base import XMLAPIBaseSerializer
+from pyccu3.types import PartyDate
 
 
 @dataclass
@@ -33,7 +35,7 @@ class HomeMaticDatapoint(XMLAPIBaseSerializer):
     name: str
     type: DataPointType
     ise_id: int
-    value: Union[float, BOOLEAN]
+    value: Union[float, BOOLEAN, IPv6Address, IPv4Address, PartyDate]
     valuetype: int
     valueunit: DataPointUnit
     timestamp: int
