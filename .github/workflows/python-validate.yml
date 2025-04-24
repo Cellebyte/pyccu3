@@ -47,6 +47,8 @@ jobs:
         name: "pyccu3-sdist"
         path: dist/*
         retention-days: 30
+        overwrite: true
+        if-no-files-found: error
     - name: Pytest
       run: |
         echo "This should later run the unit tests."
