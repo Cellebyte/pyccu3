@@ -46,7 +46,7 @@ jobs:
       with:
         name: "python${{ matrix.python-version }}-pyccu3-sdist"
         path: dist/*
-        retention-days: 30
+        retention-days: 15
         overwrite: true
         if-no-files-found: error
     - name: Pytest
