@@ -74,6 +74,7 @@ class HomeMaticState(XMLAPIBaseSerializer):
     name: str
     ise_id: int
     unreach: Optional[bool]
+    sticky_unreach: Optional[bool]
     config_pending: Optional[bool]
     channel: List[HomeMaticStateChannel] = field(default_factory=list)
 
