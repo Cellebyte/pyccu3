@@ -41,6 +41,7 @@ class BOOLEAN(MultiValueEnum):
     FALSE = False, "false", "no"
     NONE = None, "STATE_NOT_AVAILABLE"
 
+
 class DataPointType(Enum):
     ACTIVITY_STATE = "ACTIVITY_STATE"
     ACTUAL_TEMPERATURE = "ACTUAL_TEMPERATURE"
