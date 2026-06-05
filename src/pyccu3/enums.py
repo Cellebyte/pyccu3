@@ -8,7 +8,7 @@ class MultiValueEnum(Enum):
     """
 
     def __init__(self, *args, **kwargs):
-        super().__init__(self, args, kwargs)
+        super().__init__()
         self._all_values = []
 
     def __new__(cls, *values):
@@ -49,6 +49,7 @@ class DataPointType(Enum):
     ACTIVE_PROFILE = "ACTIVE_PROFILE"
     BOOST_MODE = "BOOST_MODE"
     BOOST_TIME = "BOOST_TIME"
+    BOOTED = "BOOTED"
     CARRIER_SENSE_LEVEL = "CARRIER_SENSE_LEVEL"
     CMD_KILL = "CMD_KILL"
     CMD_EXEC = "CMD_EXEC"
